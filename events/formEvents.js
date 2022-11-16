@@ -58,6 +58,7 @@ const formEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
+
       };
 
       // console.warn(payload);
@@ -70,6 +71,21 @@ const formEvents = () => {
       });
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('update-author')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      // console.warn('CLICKED UPDATE BOOK', e.target.id);
+      // console.warn(firebaseKey);
+
+      const payload = {
+        email: document.querySelector('#email').value,
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        firebaseKey
+      };
+      updateAuthor(payload).then(() => {
+        getAuthors().then(showAuthors);
+      });
+    }
   });
 };
 
