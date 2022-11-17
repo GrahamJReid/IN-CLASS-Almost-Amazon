@@ -1,6 +1,6 @@
 import { getAuthors, getFavoriteAuthors } from '../api/authorData';
 import { getBooks, booksOnSale } from '../api/bookData';
-import { showBooks } from '../pages/books';
+import { searchedBooksOnDom, showBooks, showBooksArr } from '../pages/books';
 import { signOut } from '../utils/auth';
 import { showAuthors } from '../pages/authors';
 
@@ -35,18 +35,22 @@ const navigationEvents = () => {
 
   // STRETCH: SEARCH
   document.querySelector('#search').addEventListener('keyup', (e) => {
+    e.preventDefault();
     const searchValue = document.querySelector('#search').value.toLowerCase();
     console.warn(searchValue);
-
-    // WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
-    if (e.keyCode === 13) {
-      // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
-      // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
-      // OTHERWISE SHOW THE STORE
-
-      document.querySelector('#search').value = '';
-    }
+    // eslint-disable-next-line arrow-parens
+    const searchResult = showBooksArr.filter(taco => taco.title.toLowerCase().includes(searchValue));
+    console.warn(searchResult);
+    searchedBooksOnDom(searchResult);
   });
 };
+console.warn(showBooksArr);
+// WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
+// if (e.keyCode === 13) {
+// MAKE A CALL TO THE API TO FILTER ON THE BOOKS
+// IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
+// OTHERWISE SHOW THE STORE
+
+// document.querySelector('#search').value = '';
 
 export default navigationEvents;
