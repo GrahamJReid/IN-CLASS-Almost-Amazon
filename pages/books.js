@@ -26,10 +26,14 @@ const emptyBooks = () => {
   const domString = '<h1>No Books</h1>';
   renderToDOM('#store', domString);
 };
-const showBooksArr = [];
-
+// eslint-disable-next-line import/no-mutable-exports
+let showBooksArr = [];
+const showBooksClear = () => {
+  showBooksArr = [];
+};
 const showBooks = (array) => {
   clearDom();
+  showBooksClear();
   array.forEach((item) => showBooksArr.push(item));
   console.warn(showBooksArr);
   const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-book-btn">Add A Book</button>';

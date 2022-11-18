@@ -44,6 +44,7 @@ const navigationEvents = () => {
     searchedBooksOnDom(searchResult);
   });
 };
+
 console.warn(showBooksArr);
 // WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
 // if (e.keyCode === 13) {
