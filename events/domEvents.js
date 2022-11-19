@@ -3,7 +3,7 @@ import { deleteAuthor, getAuthors, getSingleAuthor } from '../api/authorData';
 import {
   deleteBook, getBooks, getSingleBook,
 } from '../api/bookData';
-import { deleteAuthorBooksRelationship, getAuthorandBooks } from '../api/mergedData';
+import { deleteAuthorBooksRelationship, getAuthorandBooks, getBookDetails } from '../api/mergedData';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
 import viewAuthorBook from '../pages/authorBooks';
@@ -43,26 +43,7 @@ const domEvents = () => {
     if (e.target.id.includes('view-book-btn')) {
       console.warn('VIEW BOOK', e.target.id);
       const [, firebaseKey] = (e.target.id.split('--'));
-      getSingleBook(firebaseKey).then((obj) => {
-        getSingleAuthor(obj.author_id).then((taco) => {
-          console.warn(taco);
-          const payload = {
-            title: obj.title,
-            description: obj.description,
-            image: obj.image,
-            price: obj.price,
-            author_id: obj.author_id,
-            sale: obj.sale,
-            authorObject: {
-              email: taco.email,
-              first_name: taco.first_name,
-              last_name: taco.last_name
-            },
-            firebaseKey,
-          };
-          viewBook(payload);
-        });
-      });
+      getBookDetails(firebaseKey).then(viewBook);
     }
     // show authors books
     if (e.target.id.includes('view-author-btn')) {
