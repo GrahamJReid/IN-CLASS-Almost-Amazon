@@ -1,7 +1,9 @@
+// eslint-disable-next-line no-unused-vars
 import { deleteAuthor, getAuthors, getSingleAuthor } from '../api/authorData';
 import {
   deleteBook, getBooks, getSingleBook,
 } from '../api/bookData';
+import { deleteAuthorBooksRelationship } from '../api/mergedData';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
 import { showAuthors } from '../pages/authors';
@@ -68,8 +70,8 @@ const domEvents = () => {
       if (window.confirm('Want to delete?')) {
         console.warn('DELETE AUTHOR', e.target.id);
         const [, firebaseKey] = e.target.id.split('--');
-        deleteAuthor(firebaseKey).then(() => {
-          getAuthors().then(showAuthors);
+        deleteAuthorBooksRelationship(firebaseKey).then(() => {
+          getAuthors(firebaseKey).then(showAuthors);
         });
       }
     }
