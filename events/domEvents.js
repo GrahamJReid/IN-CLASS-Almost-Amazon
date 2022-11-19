@@ -1,9 +1,12 @@
 import { deleteAuthor, getAuthors, getSingleAuthor } from '../api/authorData';
-import { deleteBook, getBooks, getSingleBook } from '../api/bookData';
+import {
+  deleteBook, getBooks, getSingleBook,
+} from '../api/bookData';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
 import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
+import viewBook from '../pages/viewBook';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -36,7 +39,27 @@ const domEvents = () => {
     // TODO: CLICK EVENT FOR VIEW BOOK DETAILS
     if (e.target.id.includes('view-book-btn')) {
       console.warn('VIEW BOOK', e.target.id);
-      console.warn(e.target.id.split('--'));
+      const [, firebaseKey] = (e.target.id.split('--'));
+      getSingleBook(firebaseKey).then((obj) => {
+        getSingleAuthor(obj.author_id).then((taco) => {
+          console.warn(taco);
+          const payload = {
+            title: obj.title,
+            description: obj.description,
+            image: obj.image,
+            price: obj.price,
+            author_id: obj.author_id,
+            sale: obj.sale,
+            authorObject: {
+              email: taco.email,
+              first_name: taco.first_name,
+              last_name: taco.last_name
+            },
+            firebaseKey,
+          };
+          viewBook(payload);
+        });
+      });
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
