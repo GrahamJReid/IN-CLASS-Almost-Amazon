@@ -66,6 +66,7 @@ const deleteAuthor = (firebaseKey) => new Promise((resolve, reject) => {
     .then((data) => resolve((data)))
     .catch(reject);
 });
+// delete single author
 
 // FIXME: UPDATE AUTHOR
 const updateAuthor = (payload) => new Promise((resolve, reject) => {
@@ -81,7 +82,17 @@ const updateAuthor = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 // TODO: GET A SINGLE AUTHOR'S BOOKS
-const getAuthorBooks = () => {};
+const getAuthorBooks = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
 
 export {
   getAuthors,

@@ -1,9 +1,12 @@
+// eslint-disable-next-line no-unused-vars
 import { deleteAuthor, getAuthors, getSingleAuthor } from '../api/authorData';
 import {
   deleteBook, getBooks, getSingleBook,
 } from '../api/bookData';
+import { deleteAuthorBooksRelationship, getAuthorandBooks } from '../api/mergedData';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
+import viewAuthorBook from '../pages/authorBooks';
 import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
 import viewBook from '../pages/viewBook';
@@ -61,6 +64,11 @@ const domEvents = () => {
         });
       });
     }
+    // show authors books
+    if (e.target.id.includes('view-author-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      getAuthorandBooks(firebaseKey).then(viewAuthorBook);
+    }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
     if (e.target.id.includes('delete-author-btn')) {
@@ -68,8 +76,8 @@ const domEvents = () => {
       if (window.confirm('Want to delete?')) {
         console.warn('DELETE AUTHOR', e.target.id);
         const [, firebaseKey] = e.target.id.split('--');
-        deleteAuthor(firebaseKey).then(() => {
-          getAuthors().then(showAuthors);
+        deleteAuthorBooksRelationship(firebaseKey).then(() => {
+          getAuthors(firebaseKey).then(showAuthors);
         });
       }
     }
