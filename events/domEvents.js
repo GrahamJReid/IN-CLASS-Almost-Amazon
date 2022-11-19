@@ -3,9 +3,10 @@ import { deleteAuthor, getAuthors, getSingleAuthor } from '../api/authorData';
 import {
   deleteBook, getBooks, getSingleBook,
 } from '../api/bookData';
-import { deleteAuthorBooksRelationship } from '../api/mergedData';
+import { deleteAuthorBooksRelationship, getAuthorandBooks } from '../api/mergedData';
 import addAuthorForm from '../components/forms/addAuthorForm';
 import addBookForm from '../components/forms/addBookForm';
+import viewAuthorBook from '../pages/authorBooks';
 import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
 import viewBook from '../pages/viewBook';
@@ -62,6 +63,11 @@ const domEvents = () => {
           viewBook(payload);
         });
       });
+    }
+    // show authors books
+    if (e.target.id.includes('view-author-btn')) {
+      const [, firebaseKey] = e.target.id.split('--');
+      getAuthorandBooks(firebaseKey).then(viewAuthorBook);
     }
 
     // FIXME: ADD CLICK EVENT FOR DELETING AN AUTHOR
