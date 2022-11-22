@@ -3,7 +3,7 @@ import { createBook, getBooks, updateBook } from '../api/bookData';
 import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
 
-const formEvents = () => {
+const formEvents = (user) => {
   document.querySelector('#main-container').addEventListener('submit', (e) => {
     e.preventDefault();
     // TODO: CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
@@ -17,6 +17,7 @@ const formEvents = () => {
         price: document.querySelector('#price').value,
         author_id: document.querySelector('#author_id').value,
         sale: document.querySelector('#sale').checked,
+        uid: `${user.uid}`,
       };
 
       // console.warn(payload);
@@ -24,7 +25,7 @@ const formEvents = () => {
         const patchPayload = { firebaseKey: name };
 
         updateBook(patchPayload).then(() => {
-          getBooks().then(showBooks);
+          getBooks(user.uid).then(showBooks);
         });
       });
     }
@@ -42,12 +43,12 @@ const formEvents = () => {
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
         author_id: document.querySelector('#author_id').value,
-        sale: document.querySelector('#sale').checked,
+        sale: document.querySelector('#sale').value,
         firebaseKey,
       };
 
       updateBook(payload).then(() => {
-        getBooks().then(showBooks);
+        getBooks(user.uid).then(showBooks);
       });
     }
     // FIXME: ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
@@ -58,6 +59,8 @@ const formEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
+        favorite: document.querySelector('#favoritez').checked,
+        uid: user.uid,
 
       };
 
@@ -66,7 +69,7 @@ const formEvents = () => {
         const patchPayload = { firebaseKey: name };
 
         updateAuthor(patchPayload).then(() => {
-          getAuthors().then(showAuthors);
+          getAuthors(user.uid).then(showAuthors);
         });
       });
     }
@@ -80,10 +83,11 @@ const formEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
+        favorite: document.querySelector('#favoritez').checked,
         firebaseKey
       };
       updateAuthor(payload).then(() => {
-        getAuthors().then(showAuthors);
+        getAuthors(user.uid).then(showAuthors);
       });
     }
   });
