@@ -1,4 +1,4 @@
-// for merged promises
+//  merged promises
 
 import { deleteAuthor, getAuthorBooks, getSingleAuthor } from './authorData';
 import { deleteBook, getSingleBook } from './bookData';
