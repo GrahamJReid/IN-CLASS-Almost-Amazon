@@ -42,7 +42,7 @@ const domEvents = (user) => {
       const [, firebaseKey] = (e.target.id.split('--'));
       getBookDetails(firebaseKey).then(viewBook);
     }
-    // SHOW AUTHOR BOOKS
+    // SHO AUTHOR BOOKS
     if (e.target.id.includes('view-author-btn')) {
       const [, firebaseKey] = e.target.id.split('--');
       getAuthorandBooks(firebaseKey).then(viewAuthorBook);

@@ -77,7 +77,6 @@ const formEvents = (user) => {
     if (e.target.id.includes('update-author')) {
       const [, firebaseKey] = e.target.id.split('--');
       // console.warn('CLICKED UPDATE BOOK', e.target.id);
-      // console.warn(firebaseKey);
 
       const payload = {
         email: document.querySelector('#email').value,
