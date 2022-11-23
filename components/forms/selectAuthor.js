@@ -2,6 +2,7 @@ import { getAuthors } from '../../api/authorData';
 import renderToDOM from '../../utils/renderToDom';
 
 const selectAuthor = (user) => {
+  console.warn(user);
   let domString = `<label for="author">Select an Author</label>
     <select class="form-control" id="author_id" required>
     <option value="">Select an Author</option>`;
